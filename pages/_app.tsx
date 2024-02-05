@@ -1,18 +1,19 @@
 import type { AppProps } from 'next/app'
-import {Roboto} from "next/font/google";
+import { Poppins } from 'next/font/google';
 
- 
-const roboto = Roboto({
-subsets:["latin"],
-weight: ['400', '700'],
-})
+
+const poppins = Poppins({
+  subsets:["latin"],
+  weight: ['400', '500'],
+  });
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
       <>
-        <main  className={roboto.className}>
-          <Component {...pageProps} />
-        </main>
+      <main className={poppins.className}>
+        <Component {...pageProps} />
+      </main>
+         
       </>
     );
   }
