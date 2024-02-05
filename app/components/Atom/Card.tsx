@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import colors from '../../constants/colors';
 import FlagIcon from '../Ion/FlagIcon';
 import Heading from '../Ion/Heading';
+import HeadingAtom from './HeadingAtom';
 
 interface CardProps {
   countryData: {
@@ -21,7 +23,7 @@ const FlagElement = styled.div`
 `;
 
 const CardContainer = styled.div`
-  border: 1px solid #eaeaea;
+  border: 1px solid ${colors.secondary};
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -44,8 +46,6 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-
-
 const Card: React.FC<CardProps> = ({ countryData }) => {
   const { name, languages, region, currencies, flags } = countryData;
 
@@ -56,30 +56,16 @@ const Card: React.FC<CardProps> = ({ countryData }) => {
           <FlagIcon src={flags?.png} alt={`${name} flag`} />
         </FlagElement>
         <div>
-           <Heading content={region} color='accent'  />
-           <Heading content={name} fontSize='large' fontWeight='bold' />
+          {region && <Heading content={region} color='accent' />}
+          {name && <Heading content={name} fontSize='large' fontWeight='bold' />}
         </div>
-       
       </Wrapper>
-      <div>
-        <Heading content='Currency: ' fontSize='medium' lineHeight='medium' fontWeight='bold' as='span' spacing='none' /> 
-        {currencies && 
-        <Heading
-         content={currencies.map((currency) => currency.code).join(', ')} 
-         fontSize='medium' 
-         lineHeight='medium' 
-         as='span' 
-         spacing='none'
-         />}
-      </div>
-      <Heading content='Languages: ' fontSize='medium' lineHeight='medium' fontWeight='bold' as='span' /> 
-      {languages && 
-        <Heading
-         content={languages.map((lang) => lang.name).join(', ')} 
-         fontSize='medium' 
-         lineHeight='medium' 
-         as='span' 
-         />}
+      {currencies && (
+        <HeadingAtom title="Currency" content={currencies.map((currency) => currency.code).join(', ')} />
+      )}
+      {languages && (
+        <HeadingAtom title="Languages" content={languages.map((lang) => lang.name).join(', ')} />
+      )}
     </CardContainer>
   );
 };
