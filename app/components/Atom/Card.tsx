@@ -1,18 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import Text from '../Ion/Text';
-import Title from '../Ion/Title';
 import FlagIcon from '../Ion/FlagIcon';
+import Heading from '../Ion/Heading';
 
 interface CardProps {
   countryData: {
     name: string;
     languages: { name: string }[];
     region: string;
-    currencies: { name: string }[];
+    currencies: { code: string }[];
     flags: {
-      png: string; // Assuming it's a URL or path to the flag image
-      // You can add more fields if needed, such as svg, gif, etc.
+      png: string;
     };
   };
 }
@@ -46,9 +44,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-const TagsWrapper = styled.div`
-  padding-bottom: 10px;
-`;
+
 
 const Card: React.FC<CardProps> = ({ countryData }) => {
   const { name, languages, region, currencies, flags } = countryData;
@@ -59,14 +55,31 @@ const Card: React.FC<CardProps> = ({ countryData }) => {
         <FlagElement>
           <FlagIcon src={flags?.png} alt={`${name} flag`} />
         </FlagElement>
-
-        <Title text={name} />
+        <div>
+           <Heading content={region} color='accent'  />
+           <Heading content={name} fontSize='large' fontWeight='bold' />
+        </div>
+       
       </Wrapper>
-      <Text content={region} />
-      <TagsWrapper>
-        {currencies && currencies.map((currency) => <Text key={currency.name} content={currency.name} />)}
-      </TagsWrapper>
-      <Text title="Languages" content={languages.map((lang) => lang.name).join(', ')} />
+      <div>
+        <Heading content='Currency: ' fontSize='medium' lineHeight='medium' fontWeight='bold' as='span' spacing='none' /> 
+        {currencies && 
+        <Heading
+         content={currencies.map((currency) => currency.code).join(', ')} 
+         fontSize='medium' 
+         lineHeight='medium' 
+         as='span' 
+         spacing='none'
+         />}
+      </div>
+      <Heading content='Languages: ' fontSize='medium' lineHeight='medium' fontWeight='bold' as='span' /> 
+      {languages && 
+        <Heading
+         content={languages.map((lang) => lang.name).join(', ')} 
+         fontSize='medium' 
+         lineHeight='medium' 
+         as='span' 
+         />}
     </CardContainer>
   );
 };

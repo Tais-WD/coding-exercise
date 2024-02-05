@@ -12,6 +12,10 @@ interface Country {
   region: string;
   currencies: { name: string }[];
   population: number;
+  flags: {
+    png: string; // Assuming it's a URL or path to the flag image
+    // You can add more fields if needed, such as svg, gif, etc.
+  };
 }
 
 const Container = styled.div`
